@@ -1,20 +1,14 @@
-name: Greet Everyone
-# This workflow is triggered on pushes to the repository.
-on: [push]
-
+name: CI
+on:   
+  - pull_request
 jobs:
-  build:
-    # Job name is Greeting
-    name: Greeting
-    # This job runs on Linux
+  job1:
     runs-on: ubuntu-latest
+    name: job1
     steps:
-      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
-      - name: Hello world
-        uses: actions/hello-world-javascript-action@v1.1
-        with:
-          who-to-greet: 'Mona the Octocat'
-        id: hello
-      # This step prints an output (time) from the previous step's action.
-      - name: Echo the greeting's time
-        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
+    - name: start minikube 
+      id: minikube
+      uses: medyagh/setup-minikube@master
+    # now you can run kubectl to see the pods in the cluster
+    - name: kubectl 
+      run: kubectl get pods -A
